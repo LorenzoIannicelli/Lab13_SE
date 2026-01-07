@@ -49,4 +49,18 @@ class Controller:
 
     def handle_ricerca(self, e):
         """ Handler per gestire il problema ricorsivo di ricerca del cammino """""
-        # TODO
+        threshold = float(self._view.txt_name.value)
+        percorso, costo = self._model.get_percorso(threshold)
+
+        txt1 = f'Numero archi percorso più lungo: {len(percorso)}'
+        txt2 = f'Peso cammino massimo: {costo}'
+
+        self._view.lista_visualizzazione_3.controls.clear()
+        self._view.lista_visualizzazione_3.controls.append(ft.Text(txt1))
+        self._view.lista_visualizzazione_3.controls.append(ft.Text(txt2))
+
+        for i in range(len(percorso)-1):
+            txt3 = f"{percorso[i]} --> {percorso[i+1]}: {self._model._G[percorso[i]][percorso[i+1]]['weight']}"
+            self._view.lista_visualizzazione_3.controls.append(ft.Text(txt3))
+
+        self._view.update()
